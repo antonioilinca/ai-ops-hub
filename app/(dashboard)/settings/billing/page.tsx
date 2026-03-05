@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { PLANS } from "@/types";
+import { PortalButton, CheckoutButton } from "./BillingButtons";
 
 export default async function BillingPage() {
   const supabase = await createClient();
@@ -83,14 +84,7 @@ export default async function BillingPage() {
 
       {/* Gérer l'abonnement (portal Stripe) */}
       {isOwner && org.stripe_customer_id && (
-        <form action="/api/stripe/portal" method="POST">
-          <button
-            type="submit"
-            className="text-sm text-primary hover:underline"
-          >
-            Gérer l'abonnement (factures, carte bancaire) →
-          </button>
-        </form>
+        <PortalButton />
       )}
 
       {!isOwner && (
@@ -120,15 +114,7 @@ function PlanCard({
         <li>✓ Support prioritaire</li>
       </ul>
       {isOwner && (
-        <form action="/api/stripe/checkout" method="POST">
-          <input type="hidden" name="plan" value={plan} />
-          <button
-            type="submit"
-            className="w-full bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Passer au plan {p.name}
-          </button>
-        </form>
+        <CheckoutButton plan={plan} label={`Passer au plan ${p.name}`} />
       )}
     </div>
   );

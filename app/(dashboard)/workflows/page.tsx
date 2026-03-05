@@ -26,6 +26,7 @@ export default async function WorkflowsPage() {
     weekly_report:      { label: "Rapport hebdo",         icon: "📊", desc: "Synthèse auto chaque lundi" },
     proposal_generator: { label: "Générateur de propale", icon: "📄", desc: "Propale pro en 5 min" },
     qa_bot:             { label: "Base de connaissance",  icon: "💬", desc: "Q&A sur vos documents" },
+    lead_qualifier:     { label: "Qualification leads",   icon: "🎯", desc: "Qualifie et score vos prospects" },
   };
 
   return (

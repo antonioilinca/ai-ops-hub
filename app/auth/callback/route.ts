@@ -1,20 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-// Callback OAuth après login Google/GitHub
-export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+// Gère le callback de confirmation d'email Supabase
+export async function GET(req: NextRequest) {
+  const { searchParams, origin } = new URL(req.url);
   const code = searchParams.get("code");
-  const redirect = searchParams.get("redirect") ?? "/";
+  const next = searchParams.get("next") ?? "/dashboard";
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}${redirect}`);
+      // Check if user has completed onboarding
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: member } = await supabase
+          .from("org_members")
+          .select("id")
+          .eq("user_id", user.id)
+          .limit(1)
+          .single();
+        if (!member) {
+          return NextResponse.redirect(`${origin}/onboarding`);
+        }
+      }
+      return NextResponse.redirect(`${origin}${next}`);
     }
   }
 
-  // En cas d'erreur, redirige vers login
-  return NextResponse.redirect(`${origin}/login?error=auth_callback_failed`);
+  // En cas d'erreur → retour login avec message
+  return NextResponse.redirect(`${origin}/login?error=confirmation_failed`);
 }

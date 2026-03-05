@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { requireSession } from "@/lib/session";
 import { hasPermission, PlanLimitError } from "@/lib/rbac";
 import { logAudit, getRequestMeta } from "@/lib/audit";
-import { enqueueWorkflowRun } from "@/lib/queue";
+
 import { getPlanLimits } from "@/lib/rbac";
 import { createAdminClient } from "@/lib/supabase/server";
 import { z } from "zod";
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 // ─── POST /api/workflows — crée un workflow ──────────────────────────────────
 const CreateWorkflowSchema = z.object({
   name:   z.string().min(1).max(100),
-  type:   z.enum(["email_triage", "meeting_summary", "weekly_report", "proposal_generator", "qa_bot"]),
+  type:   z.enum(["email_triage", "meeting_summary", "weekly_report", "proposal_generator", "qa_bot", "lead_qualifier"]),
   config: z.record(z.unknown()).default({}),
 });
 

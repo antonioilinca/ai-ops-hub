@@ -51,7 +51,8 @@ export type WorkflowType =
   | "meeting_summary"
   | "weekly_report"
   | "proposal_generator"
-  | "qa_bot";
+  | "qa_bot"
+  | "lead_qualifier";
 
 export type WorkflowRunStatus =
   | "pending"
@@ -167,8 +168,8 @@ export const PLANS: Record<
   Plan,
   { name: string; price: number; maxMembers: number; maxWorkflows: number }
 > = {
-  free: { name: "Gratuit", price: 0, maxMembers: 1, maxWorkflows: 2 },
-  starter: { name: "Starter", price: 49, maxMembers: 3, maxWorkflows: 5 },
-  team: { name: "Team", price: 149, maxMembers: 15, maxWorkflows: 20 },
-  enterprise: { name: "Enterprise", price: 0, maxMembers: 999, maxWorkflows: 999 },
+  free:       { name: "Gratuit",    price: 0,  maxMembers: 1,   maxWorkflows: 2   },
+  starter:    { name: "Starter",    price: 29, maxMembers: 3,   maxWorkflows: 5   },
+  team:       { name: "Team",       price: 79, maxMembers: 15,  maxWorkflows: 20  },
+  enterprise: { name: "Enterprise", price: 0,  maxMembers: 999, maxWorkflows: 999 },
 };

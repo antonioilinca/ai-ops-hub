@@ -3,19 +3,21 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Logo } from "@/components/logo";
 import Link from "next/link";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") ?? "/dashboard";
+  const hasError = searchParams.get("error") === "confirmation_failed";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(hasError ? "Le lien de confirmation a expiré. Réessayez." : null);
   const [mode, setMode] = useState<"login" | "register">("login");
-  const [success, setSuccess] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState(false);
 
   const supabase = createClient();
 
@@ -23,12 +25,15 @@ function LoginForm() {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-    setSuccess(null);
 
     if (mode === "login") {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
-        setError("Email ou mot de passe incorrect.");
+        if (error.message.includes("Email not confirmed")) {
+          setError("Confirmez votre email avant de vous connecter. Vérifiez vos spams.");
+        } else {
+          setError("Email ou mot de passe incorrect.");
+        }
       } else {
         router.push(redirect);
         router.refresh();
@@ -42,17 +47,52 @@ function LoginForm() {
       if (error) {
         setError(error.message);
       } else {
-        setSuccess("Vérifiez votre email pour confirmer votre compte.");
+        setEmailSent(true);
       }
     }
 
     setIsLoading(false);
   }
 
+  if (emailSent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-2xl shadow-sm border border-border p-8 text-center">
+            <div className="flex justify-center mb-6">
+              <Logo />
+            </div>
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">📧</span>
+            </div>
+            <h2 className="text-xl font-bold mb-2">Vérifiez votre boîte mail</h2>
+            <p className="text-muted-foreground text-sm mb-4">
+              Un email de confirmation a été envoyé à <strong>{email}</strong>.
+              Cliquez sur le lien pour activer votre compte.
+            </p>
+            <div className="bg-amber-50 border border-amber-100 rounded-lg px-4 py-3 text-sm text-amber-700 mb-6 text-left">
+              <p className="font-medium mb-1">💡 Email non reçu ?</p>
+              <ul className="list-disc list-inside space-y-1 text-xs">
+                <li>Vérifiez vos <strong>spams / courrier indésirable</strong></li>
+                <li>Délai possible de quelques minutes</li>
+                <li>Expéditeur : noreply@supabase.io</li>
+              </ul>
+            </div>
+            <button
+              onClick={() => { setEmailSent(false); setMode("login"); }}
+              className="text-sm text-primary hover:underline"
+            >
+              ← Retour à la connexion
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md">
-        {/* Back to landing */}
         <div className="mb-6 text-center">
           <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             ← Retour à l&apos;accueil
@@ -60,20 +100,15 @@ function LoginForm() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-border p-8">
-          {/* Logo */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                O
-              </div>
-              <span className="text-xl font-semibold">OpsAI</span>
+            <div className="flex justify-center mb-3">
+              <Logo />
             </div>
             <p className="text-muted-foreground text-sm">
-              {mode === "login" ? "Connectez-vous à votre espace" : "Créez votre compte"}
+              {mode === "login" ? "Connectez-vous à votre espace" : "Créez votre compte gratuitement"}
             </p>
           </div>
 
-          {/* Formulaire */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1.5" htmlFor="email">
@@ -93,6 +128,9 @@ function LoginForm() {
             <div>
               <label className="block text-sm font-medium mb-1.5" htmlFor="password">
                 Mot de passe
+                {mode === "register" && (
+                  <span className="text-muted-foreground font-normal ml-1">(min. 8 caractères)</span>
+                )}
               </label>
               <input
                 id="password"
@@ -112,11 +150,6 @@ function LoginForm() {
                 {error}
               </div>
             )}
-            {success && (
-              <div className="text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2.5 border border-green-100">
-                {success}
-              </div>
-            )}
 
             <button
               type="submit"
@@ -130,7 +163,7 @@ function LoginForm() {
           <p className="text-center text-sm text-muted-foreground mt-6">
             {mode === "login" ? "Pas encore de compte ?" : "Déjà un compte ?"}{" "}
             <button
-              onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(null); setSuccess(null); }}
+              onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(null); }}
               className="text-primary font-medium hover:underline"
             >
               {mode === "login" ? "S'inscrire gratuitement" : "Se connecter"}

@@ -25,8 +25,8 @@ function mapSubscriptionStatus(status: Stripe.Subscription.Status) {
 
 // Mapping price_id → plan OpsAI
 function getPlanFromPriceId(priceId: string): string {
-  if (priceId === process.env.STRIPE_PRICE_STARTER) return "starter";
-  if (priceId === process.env.STRIPE_PRICE_TEAM) return "team";
+  if (priceId === process.env.STRIPE_PRICE_STARTER_MONTHLY) return "starter";
+  if (priceId === process.env.STRIPE_PRICE_TEAM_MONTHLY) return "team";
   return "free";
 }
 

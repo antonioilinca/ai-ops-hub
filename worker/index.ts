@@ -10,6 +10,10 @@ import { getRedisConnection, getRedisOptions, QUEUES, WorkflowJobData, Embedding
 import { createAdminClient } from "@/lib/supabase/server";
 import { processEmailTriage } from "./processors/email-triage";
 import { processMeetingSummary } from "./processors/meeting-summary";
+import { processWeeklyReport } from "./processors/weekly-report";
+import { processProposalGenerator } from "./processors/proposal-generator";
+import { processQaBot } from "./processors/qa-bot";
+import { processLeadQualifier } from "./processors/lead-qualifier";
 
 // Charge les variables d'env (en dev, utilise dotenv)
 if (process.env.NODE_ENV !== "production") {
@@ -50,25 +54,19 @@ const workflowWorker = new Worker<WorkflowJobData>(
           break;
 
         case "weekly_report":
-          // TODO: implémenter le rapport hebdo (V1)
-          output = {
-            message: "Rapport hebdo — bientôt disponible",
-            generated_at: new Date().toISOString(),
-          };
+          output = await processWeeklyReport(job.data);
           break;
 
         case "proposal_generator":
-          // TODO: V1
-          output = {
-            message: "Générateur de propale — bientôt disponible",
-          };
+          output = await processProposalGenerator(job.data);
           break;
 
         case "qa_bot":
-          // TODO: V1 — nécessite RAG
-          output = {
-            message: "QA Bot — bientôt disponible (nécessite des documents)",
-          };
+          output = await processQaBot(job.data);
+          break;
+
+        case "lead_qualifier":
+          output = await processLeadQualifier(job.data);
           break;
 
         default:

@@ -9,14 +9,14 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 // Plans disponibles mappés aux price IDs Stripe
 export const STRIPE_PLANS = {
   starter: {
-    priceId: process.env.STRIPE_PRICE_STARTER!,
+    priceId: process.env.STRIPE_PRICE_STARTER_MONTHLY!,
     name: "Starter",
-    amount: 4900, // centimes
+    amount: 2900, // centimes — 29€/mois
   },
   team: {
-    priceId: process.env.STRIPE_PRICE_TEAM!,
+    priceId: process.env.STRIPE_PRICE_TEAM_MONTHLY!,
     name: "Team",
-    amount: 14900,
+    amount: 7900, // centimes — 79€/mois
   },
 } as const;
 
