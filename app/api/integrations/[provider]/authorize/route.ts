@@ -55,16 +55,26 @@ export async function GET(
   const statePayload = JSON.stringify({ state, orgId: member.org_id, provider });
 
   const callbackUrl = getCallbackUrl(provider);
-  const params2 = new URLSearchParams({
+  const baseParams: Record<string, string> = {
     client_id: clientId,
     redirect_uri: callbackUrl,
     response_type: "code",
     state,
-    ...(config.scopes.length > 0 && {
-      scope: config.scopes.join(provider === "slack" ? "," : " "),
-    }),
-    ...config.extraAuthorizeParams,
-  });
+  };
+
+  if (config.scopes.length > 0) {
+    if (provider === "slack") {
+      baseParams.user_scope = config.scopes.join(",");
+    } else {
+      baseParams.scope = config.scopes.join(" ");
+    }
+  }
+
+  if (config.extraAuthorizeParams) {
+    Object.assign(baseParams, config.extraAuthorizeParams);
+  }
+
+  const params2 = new URLSearchParams(baseParams);
 
   const authorizeUrl = `${config.authorizeUrl}?${params2.toString()}`;
 

@@ -103,6 +103,7 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
       {/* Config */}
       <WorkflowConfigForm
         workflowId={id}
+        workflowName={wf.name}
         fields={meta.fields}
         config={(wf.config as Record<string, string>) ?? {}}
         isOwnerOrAdmin={isOwnerOrAdmin}

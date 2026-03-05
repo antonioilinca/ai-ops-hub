@@ -224,7 +224,7 @@ function Hero() {
 
 /* ─── LOGO BAR ───────────────────────────────────────────────── */
 function LogoBar() {
-  const tools = ["Notion","Slack","HubSpot","Stripe","Airtable","GitHub","Gmail","Zapier"];
+  const tools = ["Gmail","Slack","Notion","Google Drive","HubSpot","Outlook","Webhooks"];
   return (
     <section className="py-10 px-5 border-y border-gray-100 bg-gray-50/60">
       <div className="max-w-5xl mx-auto">
@@ -244,9 +244,9 @@ function LogoBar() {
 /* ─── FEATURES ───────────────────────────────────────────────── */
 function Features() {
   const features = [
-    { icon: "⚡", title: "Workflows sans code",    desc: "Créez des automatisations complexes via une interface visuelle. Connectez vos apps en quelques clics, sans une ligne de code." },
+    { icon: "⚡", title: "Workflows sans code",    desc: "Créez des automatisations complexes en quelques clics. Configurez le déclencheur, les étapes et les actions, sans une ligne de code." },
     { icon: "🤖", title: "IA intégrée",            desc: "Analyse de texte, classification, résumé automatique, réponses générées par Claude AI directement dans vos workflows." },
-    { icon: "🔗", title: "12 intégrations natives",  desc: "Gmail, Slack, Notion, HubSpot, Google Drive, Outlook, Webhooks et plus. Nouvelles intégrations chaque mois." },
+    { icon: "🔗", title: "7 intégrations natives",  desc: "Gmail, Slack, Notion, HubSpot, Google Drive, Outlook et Webhooks. Nouvelles intégrations chaque mois." },
     { icon: "📋", title: "Logs et monitoring",     desc: "Chaque exécution est tracée en temps réel. Déboguer un workflow n'a jamais été aussi simple." },
     { icon: "👥", title: "Multi-équipes",           desc: "Gérez les accès par rôle (owner, admin, member). Chaque équipe a son espace isolé et sécurisé." },
     { icon: "🛡️", title: "Sécurité enterprise",    desc: "Données chiffrées, authentification sécurisée, conformité RGPD. Votre ops en toute sérénité." },
@@ -288,7 +288,7 @@ function Features() {
 function HowItWorks() {
   const steps = [
     { num:"01", title:"Connectez vos outils",    desc:"Ajoutez vos intégrations en 2 clics : Slack, Gmail, Notion, HubSpot... Pas besoin de clé API compliquée.", icon:"🔌" },
-    { num:"02", title:"Créez votre workflow",     desc:"Définissez le déclencheur, les étapes et les actions. L'éditeur visuel rend ça aussi simple qu'un diagramme.", icon:"🗺️" },
+    { num:"02", title:"Créez votre workflow",     desc:"Choisissez un type de workflow, configurez les paramètres et activez. Tout est guidé, étape par étape.", icon:"🗺️" },
     { num:"03", title:"Activez et oubliez",       desc:"OpsAI s'occupe du reste. Vos workflows tournent 24h/24, vous recevez des alertes si quelque chose cloche.", icon:"🚀" },
   ];
 
@@ -332,8 +332,8 @@ function HowItWorks() {
 function Stats() {
   const stats = [
     { value: "6", label: "Types de workflows prêts à l'emploi" },
-    { value: "12",   label: "Intégrations disponibles" },
-    { value: "44",   label: "Leçons dans l'Academy" },
+    { value: "7",    label: "Intégrations natives" },
+    { value: "44",   label: "Formations dans l'Academy" },
     { value: "~14h", label: "Économisées / semaine en moyenne" },
   ];
   return (
@@ -360,14 +360,14 @@ function Pricing() {
     {
       name: "Starter", price: "29€", period: "/mois",
       desc: "Idéal pour les petites équipes qui veulent automatiser sans complexité.",
-      features: ["Jusqu'à 5 workflows actifs","1 000 exécutions / mois","Toutes les intégrations","Logs 7 jours","Support par email"],
+      features: ["Jusqu'à 5 workflows actifs","3 membres max","Toutes les intégrations","Logs d'audit","Support par email"],
       cta: "Commencer", highlight: false,
     },
     {
       name: "Team", price: "79€", period: "/mois",
       badge: "✨ Populaire",
       desc: "Pour les équipes en croissance qui ont besoin de puissance et de collaboration.",
-      features: ["Workflows illimités","10 000 exécutions / mois","Toutes les intégrations","Logs 30 jours","IA Claude intégrée","Multi-utilisateurs & rôles","Support prioritaire"],
+      features: ["Jusqu'à 20 workflows actifs","15 membres max","Toutes les intégrations","IA Claude intégrée","Multi-utilisateurs & rôles","Academy complète","Support prioritaire"],
       cta: "Commencer", highlight: true,
     },
   ];
@@ -380,7 +380,7 @@ function Pricing() {
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4 tracking-tight">
               Des prix simples et transparents
             </h2>
-            <p className="text-lg text-gray-500">14 jours d&apos;essai gratuit, sans carte bancaire.</p>
+            <p className="text-lg text-gray-500">Un plan gratuit pour démarrer, sans carte bancaire.</p>
           </div>
         </ScrollReveal>
 
@@ -439,7 +439,7 @@ function CtaBanner() {
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Prêt à gagner des heures chaque semaine ?</h2>
             <p className="text-indigo-200 text-lg mb-8 max-w-xl mx-auto">Rejoignez les équipes ops qui font confiance à OpsAI pour automatiser leur quotidien.</p>
             <Link href="/login" className="inline-block bg-white text-indigo-600 font-black px-8 py-4 rounded-xl hover:bg-indigo-50 active:scale-95 transition-all text-base shadow-xl">
-              Démarrer gratuitement — 14 jours sans CB
+              Démarrer gratuitement
             </Link>
           </div>
         </div>

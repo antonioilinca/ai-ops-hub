@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
+import { hasPermission } from "@/lib/rbac";
 
 export default async function LogsPage() {
   const supabase = await createClient();
@@ -13,6 +14,9 @@ export default async function LogsPage() {
     .single();
 
   if (!member) redirect("/onboarding");
+
+  // Only owner and admin can view audit logs
+  if (!hasPermission(member.role, "audit:read")) notFound();
 
   const { data: logs } = await supabase
     .from("audit_logs")

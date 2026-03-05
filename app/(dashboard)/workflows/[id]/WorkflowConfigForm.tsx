@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import DeleteWorkflowButton from "../DeleteWorkflowButton";
 
 interface Field {
   key: string;
@@ -12,11 +13,13 @@ interface Field {
 
 export default function WorkflowConfigForm({
   workflowId,
+  workflowName,
   fields,
   config,
   isOwnerOrAdmin,
 }: {
   workflowId: string;
+  workflowName: string;
   fields: Field[];
   config: Record<string, string>;
   isOwnerOrAdmin: boolean;
@@ -76,14 +79,30 @@ export default function WorkflowConfigForm({
       {fields.map((field) => (
         <div key={field.key}>
           <label className="block text-xs font-medium text-muted-foreground mb-1.5">{field.label}</label>
-          <input
-            type="text"
-            value={values[field.key] ?? ""}
-            onChange={(e) => setValues((prev) => ({ ...prev, [field.key]: e.target.value }))}
-            placeholder={field.placeholder}
-            disabled={!isOwnerOrAdmin}
-            className="w-full border border-border rounded-lg px-4 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-indigo-300 disabled:opacity-60 disabled:cursor-not-allowed"
-          />
+          {field.type === "select" ? (
+            <select
+              value={values[field.key] ?? ""}
+              onChange={(e) => setValues((prev) => ({ ...prev, [field.key]: e.target.value }))}
+              disabled={!isOwnerOrAdmin}
+              className="w-full border border-border rounded-lg px-4 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-indigo-300 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              <option value="">{field.placeholder}</option>
+              {field.placeholder.split(",").map((opt) => (
+                <option key={opt.trim()} value={opt.trim().toLowerCase()}>
+                  {opt.trim()}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              type="text"
+              value={values[field.key] ?? ""}
+              onChange={(e) => setValues((prev) => ({ ...prev, [field.key]: e.target.value }))}
+              placeholder={field.placeholder}
+              disabled={!isOwnerOrAdmin}
+              className="w-full border border-border rounded-lg px-4 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-indigo-300 disabled:opacity-60 disabled:cursor-not-allowed"
+            />
+          )}
         </div>
       ))}
 
@@ -94,22 +113,32 @@ export default function WorkflowConfigForm({
       )}
 
       {isOwnerOrAdmin && (
-        <div className="flex gap-3 pt-2">
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50"
-          >
-            {saving ? "Sauvegarde..." : "Enregistrer"}
-          </button>
-          <button
-            onClick={handleRun}
-            disabled={running}
-            className="border border-border px-4 py-2 rounded-lg text-sm font-medium hover:bg-muted transition-colors disabled:opacity-50"
-          >
-            {running ? "Lancement..." : "Tester maintenant"}
-          </button>
-        </div>
+        <>
+          <div className="flex gap-3 pt-2">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50"
+            >
+              {saving ? "Sauvegarde..." : "Enregistrer"}
+            </button>
+            <button
+              onClick={handleRun}
+              disabled={running}
+              className="border border-border px-4 py-2 rounded-lg text-sm font-medium hover:bg-muted transition-colors disabled:opacity-50"
+            >
+              {running ? "Lancement..." : "Tester maintenant"}
+            </button>
+          </div>
+
+          <div className="border-t border-border pt-4 mt-4">
+            <DeleteWorkflowButton
+              workflowId={workflowId}
+              workflowName={workflowName}
+              onlyIcon={false}
+            />
+          </div>
+        </>
       )}
     </div>
   );

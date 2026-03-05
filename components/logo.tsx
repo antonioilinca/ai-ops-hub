@@ -5,7 +5,7 @@ interface LogoMarkProps {
   className?: string;
 }
 
-/** Logo mark seul (icône) */
+/** Logo mark seul (icône) — OpsAI "Pulse" mark */
 export function LogoMark({ size = 32, className = "" }: LogoMarkProps) {
   return (
     <svg
@@ -18,40 +18,28 @@ export function LogoMark({ size = 32, className = "" }: LogoMarkProps) {
       aria-label="OpsAI logo"
     >
       <defs>
-        <linearGradient id="logo-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+        <linearGradient id="logo-bg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#4F46E5" />
-          <stop offset="100%" stopColor="#7C3AED" />
-        </linearGradient>
-        <linearGradient id="logo-grad-inner" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#818CF8" />
-          <stop offset="100%" stopColor="#A78BFA" />
+          <stop offset="100%" stopColor="#6D28D9" />
         </linearGradient>
       </defs>
 
-      {/* Fond carré arrondi gradient */}
-      <rect width="40" height="40" rx="10" fill="url(#logo-grad)" />
+      {/* Fond carré arrondi */}
+      <rect width="40" height="40" rx="11" fill="url(#logo-bg)" />
 
-      {/* Nœud gauche */}
-      <circle cx="10" cy="20" r="3.5" fill="white" opacity="0.9" />
-      {/* Nœud haut */}
-      <circle cx="20" cy="9" r="3.5" fill="white" opacity="0.9" />
-      {/* Nœud droit */}
-      <circle cx="30" cy="20" r="3.5" fill="white" opacity="0.9" />
-      {/* Nœud bas */}
-      <circle cx="20" cy="31" r="3.5" fill="white" opacity="0.9" />
-
-      {/* Connexions (lignes de flux) */}
-      <line x1="13" y1="18" x2="17.5" y2="11.5" stroke="white" strokeWidth="1.8" strokeOpacity="0.6" strokeLinecap="round" />
-      <line x1="22.5" y1="11.5" x2="27" y2="18" stroke="white" strokeWidth="1.8" strokeOpacity="0.6" strokeLinecap="round" />
-      <line x1="27" y1="22" x2="22.5" y2="28.5" stroke="white" strokeWidth="1.8" strokeOpacity="0.6" strokeLinecap="round" />
-      <line x1="17.5" y1="28.5" x2="13" y2="22" stroke="white" strokeWidth="1.8" strokeOpacity="0.6" strokeLinecap="round" />
-
-      {/* Centre : éclair IA */}
-      <path
-        d="M21.8 13.5 L17.5 21.5 H21L18.2 26.5 L22.5 18.5 H19.2Z"
-        fill="white"
-        opacity="0.95"
+      {/* Pulse / heartbeat line — the "ops" heartbeat */}
+      <polyline
+        points="7,22 13,22 16,12 20,30 24,16 27,22 33,22"
+        fill="none"
+        stroke="white"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
+
+      {/* Small AI sparkle dot — top right */}
+      <circle cx="31" cy="11" r="2.2" fill="white" opacity="0.9" />
+      <circle cx="31" cy="11" r="3.8" fill="white" opacity="0.15" />
     </svg>
   );
 }

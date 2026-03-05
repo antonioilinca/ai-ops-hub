@@ -74,3 +74,60 @@ export async function PATCH(
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
+
+// DELETE /api/workflows/[id] — delete a workflow
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const session = await requireSession();
+
+    if (!hasPermission(session.role, "workflow:delete")) {
+      return NextResponse.json({ error: "Permission refusée" }, { status: 403 });
+    }
+
+    const admin = createAdminClient();
+
+    // Verify the workflow belongs to this org
+    const { data: existing } = await admin
+      .from("workflows")
+      .select("id, name")
+      .eq("id", id)
+      .eq("org_id", session.orgId)
+      .single();
+
+    if (!existing) {
+      return NextResponse.json({ error: "Workflow introuvable" }, { status: 404 });
+    }
+
+    const { error } = await admin
+      .from("workflows")
+      .delete()
+      .eq("id", id)
+      .eq("org_id", session.orgId);
+
+    if (error) throw error;
+
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const { ipAddress, userAgent } = getRequestMeta(req);
+    await logAudit({
+      orgId: session.orgId,
+      userId: user?.id,
+      action: "workflow.deleted",
+      resourceType: "workflow",
+      resourceId: id,
+      metadata: { name: existing.name },
+      ipAddress,
+      userAgent,
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "Erreur serveur";
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
+}
