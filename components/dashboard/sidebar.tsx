@@ -11,7 +11,7 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS = [
-  { href: "/",              label: "Dashboard",   icon: "◉" },
+  { href: "/dashboard",     label: "Dashboard",   icon: "◉" },
   { href: "/workflows",    label: "Workflows",   icon: "⚡" },
   { href: "/integrations", label: "Intégrations",icon: "🔗" },
   { href: "/logs",         label: "Logs d'audit",icon: "📋", adminOnly: true },

@@ -2,13 +2,13 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 // Routes publiques (pas d'auth requise)
-const PUBLIC_ROUTES = ["/login", "/register", "/auth/callback", "/api/stripe/webhook"];
+const PUBLIC_ROUTES = ["/", "/login", "/register", "/auth/callback", "/api/stripe/webhook"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Bypass pour routes publiques
-  const isPublic = PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
+  const isPublic = PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(route + "/"));
 
   let response = NextResponse.next({
     request: { headers: request.headers },
@@ -48,9 +48,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Redirige vers /dashboard si déjà authentifié et sur une page auth
-  if (user && (pathname === "/login" || pathname === "/register")) {
-    return NextResponse.redirect(new URL("/", request.url));
+  // Redirige vers /dashboard si déjà authentifié et sur une page auth/landing
+  if (user && (pathname === "/login" || pathname === "/register" || pathname === "/")) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return response;
@@ -58,7 +58,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Exclut les fichiers statiques et assets Next.js
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
