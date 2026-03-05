@@ -41,11 +41,11 @@ export async function GET(
 
   const config = OAUTH_PROVIDERS[provider];
   const clientId = process.env[config.clientIdEnv];
-  if (!clientId) {
-    return NextResponse.json(
-      { error: `Configuration ${config.name} manquante. Ajoutez ${config.clientIdEnv} dans les variables d'environnement.` },
-      { status: 500 }
-    );
+  const clientSecret = process.env[config.clientSecretEnv];
+  if (!clientId || !clientSecret) {
+    // Rediriger avec erreur lisible au lieu de retourner du JSON brut
+    const msg = encodeURIComponent(`${config.name} n'est pas encore configuré. Contactez l'administrateur.`);
+    return NextResponse.redirect(new URL(`/integrations?error=${msg}`, req.url));
   }
 
   // Générer un state token pour protéger contre CSRF

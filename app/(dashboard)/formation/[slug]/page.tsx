@@ -132,12 +132,12 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
             </div>
             <div className="divide-y divide-border">
               {course.lessons.map((lesson, idx) => (
-                <div key={lesson.id} className="px-6 py-4 flex items-center gap-4 hover:bg-muted/30 transition-colors group">
+                <Link key={lesson.id} href={`/formation/${slug}/${lesson.id}`} className="px-6 py-4 flex items-center gap-4 hover:bg-muted/30 transition-colors group cursor-pointer">
                   <div className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm font-bold shrink-0">
                     {idx + 1}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm">{lesson.title}</div>
+                    <div className="font-medium text-sm group-hover:text-indigo-600 transition-colors">{lesson.title}</div>
                     <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-2">
                       <span>{TYPE_ICON[lesson.type]} {TYPE_LABEL[lesson.type]}</span>
                       <span>·</span>
@@ -149,7 +149,8 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                     lessonId={lesson.id}
                     isCompleted={completedLessonIds.has(lesson.id)}
                   />
-                </div>
+                  <span className="text-muted-foreground group-hover:text-indigo-500 transition-colors">→</span>
+                </Link>
               ))}
             </div>
             <div className="px-6 py-5 border-t border-border bg-indigo-50 flex items-center justify-center">

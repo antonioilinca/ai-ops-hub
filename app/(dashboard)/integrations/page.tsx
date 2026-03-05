@@ -1,6 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import IntegrationButton from "./IntegrationButton";
+import { OAUTH_PROVIDERS } from "@/lib/integrations/providers";
+
+/** Vérifie côté serveur si un provider OAuth a ses credentials configurées */
+function isProviderConfigured(provider: string): boolean {
+  if (provider === "webhook") return true;
+  const config = OAUTH_PROVIDERS[provider as keyof typeof OAUTH_PROVIDERS];
+  if (!config) return false;
+  return !!(process.env[config.clientIdEnv] && process.env[config.clientSecretEnv]);
+}
 
 const INTEGRATIONS = [
   {
@@ -208,7 +217,11 @@ export default async function IntegrationsPage({
                   <div className="font-semibold text-sm text-gray-900 mb-1">{integration.name}</div>
                   <p className="text-xs text-gray-500 leading-relaxed mb-4">{integration.desc}</p>
                   {!integration.comingSoon && (
-                    <IntegrationButton provider={integration.provider} isConnected={isConnected} />
+                    <IntegrationButton
+                      provider={integration.provider}
+                      isConnected={isConnected}
+                      isConfigured={isProviderConfigured(integration.provider)}
+                    />
                   )}
                 </div>
               );

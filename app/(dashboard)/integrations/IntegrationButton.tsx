@@ -6,17 +6,24 @@ import { useRouter } from "next/navigation";
 export default function IntegrationButton({
   provider,
   isConnected,
+  isConfigured,
 }: {
   provider: string;
   isConnected: boolean;
+  /** true si les credentials OAuth sont configurées côté serveur */
+  isConfigured: boolean;
 }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
 
   function handleConnect() {
+    if (!isConfigured) {
+      setMessage("Bientôt disponible");
+      setTimeout(() => setMessage(null), 2500);
+      return;
+    }
     setLoading(true);
-    // Redirige vers l'endpoint OAuth authorize
     window.location.href = `/api/integrations/${provider}/authorize`;
   }
 
@@ -48,6 +55,37 @@ export default function IntegrationButton({
     } finally {
       setLoading(false);
     }
+  }
+
+  // Provider webhook → bouton spécial
+  if (provider === "webhook") {
+    return (
+      <button
+        disabled
+        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 text-gray-500 cursor-default"
+      >
+        Configurer dans Workflows
+      </button>
+    );
+  }
+
+  // Provider non configuré (pas de client ID/secret) → bouton grisé propre
+  if (!isConfigured && !isConnected) {
+    return (
+      <div className="relative">
+        <button
+          onClick={handleConnect}
+          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 text-gray-400 border border-gray-200 hover:bg-gray-50 transition-colors"
+        >
+          Bientôt disponible
+        </button>
+        {message && (
+          <div className="absolute top-full left-0 mt-1.5 z-10 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
+            {message}
+          </div>
+        )}
+      </div>
+    );
   }
 
   return (
