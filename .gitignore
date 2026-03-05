@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Environment — JAMAIS committer les secrets !
+.env
+.env.local
+.env.*.local
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# Misc
+.DS_Store
+*.pem
+.vercel
+*.tsbuildinfo
+next-env.d.ts

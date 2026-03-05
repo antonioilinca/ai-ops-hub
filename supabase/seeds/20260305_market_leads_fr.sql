@@ -1,0 +1,83 @@
+INSERT INTO public.market_leads (
+  company_name,
+  sector,
+  target_segment,
+  hq_country,
+  hq_city,
+  website,
+  contact_url,
+  signal_title,
+  signal_summary,
+  signal_source_url,
+  signal_date,
+  priority_score,
+  offer_angle,
+  next_action,
+  lead_status,
+  notes
+)
+VALUES
+  ('Manutan','B2B ecommerce','ETI and Enterprise','France','Gonesse','https://www.manutan.com','https://www.manutan.com/fr/accueil/contact','Manutan automated product data management with AI','Recent AI deployment in core catalog workflows suggests clear upskilling and change-management needs.','https://www.manutan.com/fr/accueil/presse/actualites/2025/manutan-automatise-la-gestion-de-ses-references-produits-grace-a-lia','2025-02-05',88,'AI adoption academy for operations and procurement teams','Reach out with a 4-week pilot focused on catalog and workflow teams.','new','Strong fit: mid-enterprise B2B with practical AI use cases.'),
+  ('Renault Group','Automotive','Enterprise','France','Boulogne-Billancourt','https://www.renaultgroup.com','https://www.renaultgroup.com/contact/','Renault Group Future Ready strategy with AI components','Enterprise-wide transformation indicates recurring needs for AI enablement at team level.','https://www.renaultgroup.com/actualites/finance/renault-group-future-ready-plan/',NULL,84,'Business-unit AI playbooks for manufacturing and support functions','Target one business unit with AI training + process redesign sprint.','new','Large account; longer sales cycle but high ACV.'),
+  ('Danone','FMCG','Enterprise','France','Paris','https://www.danone.com','https://www.danone.com/contact-us.html','Danone and Microsoft partnership to scale AI','Scaling AI across a global company creates demand for practical team adoption programs.','https://www.danone.com/press-releases-list/danone-and-microsoft-join-forces-to-advance-ai-across-the-company.html','2025-06-18',86,'AI enablement track for supply chain and corporate teams','Pitch adoption governance + KPI-based learning roadmap.','new','High potential if positioned with measurable business outcomes.'),
+  ('Veolia','Utilities and environmental services','Enterprise','France','Aubervilliers','https://www.veolia.com','https://www.veolia.com/fr/contact','Veolia and IBM acceleration of digital transformation','Digital transformation narrative indicates ongoing AI capability rollout opportunities.','https://www.veolia.com/fr/groupe/medias/communiques-presse/veolia-ibm-acceleration-transformation-digitale','2025-02-05',83,'Field-operations AI training and management coaching','Lead with operational excellence and risk-aware AI adoption modules.','new','Operationally complex org; emphasize safety and compliance.'),
+  ('SNCF Group','Mobility and rail','Enterprise','France','Saint-Denis','https://www.sncf.com','https://www.sncf.com/fr/groupe/contact','SNCF communication on generative AI','Public positioning on gen AI implies internal demand for structured onboarding of teams.','https://www.sncf.com/fr/groupe/newsroom/ia-generative','2025-05-20',79,'GenAI literacy plus workflow integration for transport operations','Propose pilot with support and back-office teams.','new','Public-sector style buying process; expect longer validation.'),
+  ('La Poste Groupe','Postal and logistics services','Enterprise','France','Paris','https://www.lapostegroupe.com','https://www.lapostegroupe.com/fr/contactez-nous','La Poste framework for trusted AI','Trust-centered AI strategy aligns with governance and adoption training offers.','https://www.lapostegroupe.com/fr/actualite/intelligence-artificielle-confiance',NULL,80,'Responsible AI program for managerial and operational staff','Open with compliance-first AI deployment workshops.','new','Good fit for trust/governance positioning.'),
+  ('Docaposte','Digital trust and IT services','Enterprise','France','Ivry-sur-Seine','https://www.docaposte.com','https://www.docaposte.com/contact','Docaposte highlights AI against fraud use cases','Applied AI use case indicates room for function-specific training and scaling support.','https://www.docaposte.com/blog/confiance-numerique/comment-lia-generative-renforce-les-solutions-fraude',NULL,77,'Use-case academy for fraud, ops, and support teams','Position as acceleration layer after first AI projects.','new','Can also become a distribution partner.'),
+  ('Orange','Telecom','Enterprise','France','Issy-les-Moulineaux','https://www.orange.com','https://www.orange.com/fr/contact','Orange highlights AI and data in strategic communication','Strong AI narrative suggests continuous need to onboard non-technical teams.','https://hellofuture.orange.com/fr/ia-et-analyse-de-donnees/','2025-10-04',78,'Cross-functional AI adoption for customer and network teams','Target one region or entity for a measurable pilot.','new','Large account and complex procurement.'),
+  ('BNP Paribas','Banking','Enterprise','France','Paris','https://group.bnpparibas','https://group.bnpparibas/en/group/contact-us','BNP Paribas principles for responsible generative AI','Responsible AI framing matches governance + adoption offerings.','https://group.bnpparibas/en/our-commitments/responsible-business/principles-for-a-responsible-use-of-generative-ai/',NULL,75,'Risk-aware AI adoption framework for business teams','Start from compliance and productivity wins in support functions.','new','Decision cycle can be long; focus on one division.'),
+  ('Societe Generale','Banking','Enterprise','France','Paris','https://www.societegenerale.com','https://www.societegenerale.com/en/contact-us','Societe Generale job posting for conversational AI data scientist','Active hiring for AI capabilities signals organizational demand for broader upskilling.','https://careers.societegenerale.com/en/job-offers/data-scientist-conversational-ai-boursorama-h-f-24000QN7-en','2025-09-18',76,'AI capability uplift for customer-facing and support teams','Approach through innovation and HR learning contacts.','new','Use hiring signal as conversation opener.'),
+  ('Credit Agricole CIB','Banking','Enterprise','France','Montrouge','https://www.ca-cib.com','https://www.ca-cib.com/contact-us','CA CIB role focused on generative AI and ML','Hiring around gen AI indicates immediate adoption and capability scaling needs.','https://jobs.ca-cib.com/offre-de-emploi/emploi-cdd-ml-engineer-focus-on-generative-ai-h-f_12491.aspx',NULL,74,'GenAI rollout support for business and control functions','Lead with governance + productivity blend.','new','Corporate banking context values risk control messaging.'),
+  ('LCL','Banking','Enterprise','France','Villejuif','https://www.lcl.fr','https://www.lcl.fr/contact','LCL appears in Credit Agricole AI-related hiring context','Bank unit likely needs team-level AI enablement aligned with group strategy.','https://groupecreditagricole.jobs/fr/nos-offres?search=lcl','2026-02-25',72,'Department-level AI training tied to workflow KPIs','Target operations and client support departments.','new','Entity-level entry point may be easier than full group deal.'),
+  ('AXA','Insurance','Enterprise','France','Paris','https://www.axa.com','https://www.axa.com/en/contact-us','AXA communication on AI opportunities risks and governance','Clear focus on AI governance supports adoption + policy training offers.','https://www.axa.com/en/magazine/artificial-intelligence-opportunities-risks-and-governance','2024-12-02',74,'Responsible AI deployment for insurance teams','Open with AI governance diagnostic workshop.','new','Insurance buyers prioritize risk controls and auditability.'),
+  ('VINCI','Construction and infrastructure','Enterprise','France','Nanterre','https://www.vinci.com','https://www.vinci.com/vinci.nsf/en/contact/pages/index.htm','VINCI publication on AI adoption boundaries and change','Change-management angle fits practical AI training for operational teams.','https://www.vinci.com/vinci.nsf/en/news-update/pages/artificial_intelligence_at_vinci_overcoming_resistance_to_change_while_setting_clear_boundaries_072024.htm','2024-07-01',73,'AI change-management training for field and project teams','Pitch adoption framework with frontline use cases.','new','Good fit if tied to productivity and safety metrics.'),
+  ('Thales','Defense and aerospace','Enterprise','France','Meudon','https://www.thalesgroup.com','https://www.thalesgroup.com/en/contact-us','Thales communication around AI at group level','Mature AI environment still requires broad business adoption programs.','https://www.thalesgroup.com/en/group/journalist/ai-thales',NULL,71,'AI literacy for non-technical business units','Target one corporate function before scaling.','new','Highly structured procurement and security constraints.'),
+  ('ENGIE (Tractebel)','Energy and engineering','Enterprise','France','Courbevoie','https://www.engie.com','https://www.engie.com/en/contact-us','ENGIE hiring internship focused on AI for information systems','Hiring signal suggests active AI projects and demand for adoption support.','https://jobs.engie.com/job/Courbevoie-STAGE-Intelligence-Artificielle-Syst%C3%A8me-d%27information-HF-92400/1175226001/','2025-11-17',72,'AI onboarding for engineering and support teams','Use talent and change pressure as urgency trigger.','new','Entry through one engineering entity can reduce sales friction.'),
+  ('Michelin','Industrial manufacturing','Enterprise','France','Clermont-Ferrand','https://www.michelin.com','https://www.michelin.com/en/contact-us/','Michelin narrative on AI serving people and performance','Manufacturing AI messaging aligns with structured upskilling offers.','https://www.michelin.com/en/innovation/artificial-intelligence-at-the-service-of-humanity/',NULL,72,'AI training linked to plant and supply-chain performance','Propose a plant-focused pilot with measurable KPIs.','new','Industrial context needs concrete ROI framing.'),
+  ('Carrefour','Retail','Enterprise','France','Massy','https://www.carrefour.com','https://www.carrefour.com/en/contact-us','Carrefour launched data and retail media platform','Data-centric strategic move creates AI adoption opportunities in commercial teams.','https://www.carrefour.com/en/newsroom/carrefour-launches-carrefour-links-its-new-data-retail-media-platform',NULL,74,'AI enablement for merchandising and marketing teams','Pitch AI for pricing, assortment, and campaign operations.','new','Retail needs short-cycle visible wins.'),
+  ('Saint-Gobain','Construction materials','Enterprise','France','Courbevoie','https://www.saint-gobain.com','https://www.saint-gobain.com/en/contact-us','Saint-Gobain innovation strategy includes digitalization','Digitalization strategy indicates demand for adoption across multiple functions.','https://www.saint-gobain.com/en/news/our-innovation-strategy-driving-growth-through-sustainability-and-digitalization',NULL,69,'AI adoption playbook for industrial and support teams','Start with one country unit and replicate.','new','Signal is broader digitalization; qualify AI budget early.'),
+  ('XEFI','IT services','SMB and Mid-market','France','Rillieux-la-Pape','https://www.xefi.com','https://www.xefi.com/contact','XEFI hiring on AI-related profile','IT services actor can be both client and channel for broader SME rollout.','https://carriere.xefi.fr/front-jobs-detail.html?id_job=13043&id_origin=0',NULL,81,'Partner-enabled AI training for SME customers','Approach as both direct account and reseller channel.','new','High leverage if partner model is accepted.'),
+  ('Keolis','Mobility services','Enterprise','France','Paris','https://www.keolis.com','https://www.keolis.com/en/contact','Keolis content on generative AI in operations','Mobility operator use cases fit AI enablement programs for support functions.','https://www.keolis.com/fr/medias/actualites/ia-generative',NULL,70,'Operational AI training with governance baseline','Propose quick diagnostic plus targeted training cohorts.','new','Transit operators need practical and compliant use cases.'),
+  ('Teleperformance','BPO and customer operations','Enterprise','France','Paris','https://www.teleperformance.com','https://www.teleperformance.com/en-us/contact-us','External coverage on AI impact in call-center operations','High disruption pressure in BPO makes adoption and re-skilling urgent.','https://www.lemonde.fr/economie/article/2024/03/29/teleperformance-geant-des-centres-d-appels-face-au-vertige-de-l-intelligence-artificielle_6224792_3234.html','2024-03-29',76,'AI transition program for customer-service managers and agents','Lead with workforce transition and productivity positioning.','new','Source is press coverage; validate internal sponsor early.')
+ON CONFLICT (company_name, signal_source_url) DO NOTHING;
+
+-- Baseline classification so leads are immediately sortable for prospecting.
+UPDATE public.market_leads
+SET
+  icp_fit_score = COALESCE(icp_fit_score, priority_score),
+  buying_intent_score = COALESCE(
+    buying_intent_score,
+    GREATEST(0, LEAST(100, priority_score - 5))
+  ),
+  ease_of_access_score = COALESCE(
+    ease_of_access_score,
+    CASE
+      WHEN target_segment = 'SMB and Mid-market' THEN 75
+      ELSE 55
+    END
+  ),
+  lead_temperature = CASE
+    WHEN priority_score >= 82 THEN 'hot'
+    WHEN priority_score >= 70 THEN 'warm'
+    ELSE 'cold'
+  END,
+  pipeline_stage = COALESCE(pipeline_stage, 'sourced'),
+  enrichment_status = CASE
+    WHEN decision_maker_name IS NOT NULL THEN 'done'
+    ELSE enrichment_status
+  END;
+
+-- High-confidence public emails extracted from official contact pages.
+UPDATE public.market_leads
+SET
+  contact_email = 'contact@renaultgroup.com',
+  preferred_channel = 'email',
+  enrichment_status = 'in_progress'
+WHERE company_name = 'Renault Group';
+
+UPDATE public.market_leads
+SET
+  contact_email = 'contact@xefi.com',
+  preferred_channel = 'email',
+  enrichment_status = 'in_progress'
+WHERE company_name = 'XEFI';
