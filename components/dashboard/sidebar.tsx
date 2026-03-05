@@ -9,6 +9,7 @@ interface SidebarProps {
   orgName: string;
   plan: string;
   role: Role;
+  isSuperAdmin?: boolean;
 }
 
 const NAV_SECTIONS = [
@@ -47,7 +48,7 @@ const PLAN_BADGE: Record<string, { label: string; color: string }> = {
   enterprise: { label: "Enterprise", color: "bg-purple-100 text-purple-700" },
 };
 
-export function Sidebar({ orgName, plan, role }: SidebarProps) {
+export function Sidebar({ orgName, plan, role, isSuperAdmin = false }: SidebarProps) {
   const pathname = usePathname();
   const isAdmin  = ["owner", "admin"].includes(role);
   const badge    = PLAN_BADGE[plan] ?? PLAN_BADGE.free;
@@ -103,10 +104,30 @@ export function Sidebar({ orgName, plan, role }: SidebarProps) {
         ))}
       </nav>
 
+      {/* Super Admin */}
+      {isSuperAdmin && (
+        <div className="px-3 pb-2">
+          <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 mb-1.5">
+            Super Admin
+          </div>
+          <Link
+            href="/admin"
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+              pathname === "/admin"
+                ? "bg-red-100 text-red-700 font-semibold"
+                : "text-red-500 hover:bg-red-50 hover:text-red-700"
+            }`}
+          >
+            <span className="text-base w-5 text-center">🛡️</span>
+            Administration
+          </Link>
+        </div>
+      )}
+
       {/* Footer */}
       <div className="p-4 border-t border-border space-y-2">
         <div className="text-xs text-muted-foreground">
-          Rôle : <span className="font-semibold capitalize">{role}</span>
+          Rôle : <span className="font-semibold capitalize">{isSuperAdmin ? "Super Admin" : role}</span>
         </div>
         <Link href="/" className="text-xs text-muted-foreground hover:text-foreground block">
           ← Accueil

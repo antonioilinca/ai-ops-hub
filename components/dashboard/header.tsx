@@ -52,7 +52,7 @@ export function Header({ user, orgName }: HeaderProps) {
                 <div className="text-xs font-medium truncate">{user.email}</div>
               </div>
               <a
-                href="/settings"
+                href="/settings/billing"
                 className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors"
               >
                 ⚙ Paramètres

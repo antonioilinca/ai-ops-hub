@@ -35,9 +35,11 @@ export default async function DashboardLayout({
     redirect("/onboarding");
   }
 
+  const isSuperAdmin = user.app_metadata?.role === "super_admin";
+
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar orgName={org.name} plan={org.plan} role={member.role} />
+      <Sidebar orgName={org.name} plan={org.plan} role={member.role} isSuperAdmin={isSuperAdmin} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header user={{ email: user.email ?? "", id: user.id }} orgName={org.name} />
         <main className="flex-1 overflow-y-auto p-6">
