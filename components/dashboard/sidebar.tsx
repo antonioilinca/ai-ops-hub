@@ -23,7 +23,8 @@ const NAV_SECTIONS = [
     label: "Automatisation",
     items: [
       { href: "/workflows",     label: "Workflows",    icon: "⚡" },
-      { href: "/integrations",  label: "Intégrations", icon: "🔗" },
+      { href: "/templates",    label: "Templates",    icon: "📦" },
+      { href: "/forms",        label: "Formulaires",  icon: "📝" },
       { href: "/logs",          label: "Logs d'audit", icon: "📋", adminOnly: true },
     ],
   },

@@ -1,6 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import DeleteWorkflowButton from "./DeleteWorkflowButton";
+import { WORKFLOW_TEMPLATES } from "@/data/templates";
+
+/** Lookup table pour afficher les infos d'un workflow existant */
+const TEMPLATE_MAP = Object.fromEntries(
+  WORKFLOW_TEMPLATES.map((t) => [t.id, { label: t.name, icon: t.icon, desc: t.desc }])
+);
 
 export default async function WorkflowsPage() {
   const supabase = await createClient();
@@ -23,15 +29,6 @@ export default async function WorkflowsPage() {
     .eq("org_id", member.org_id)
     .order("created_at", { ascending: false });
 
-  const WORKFLOW_LABELS: Record<string, { label: string; icon: string; desc: string }> = {
-    email_triage:       { label: "Triage email",          icon: "📧", desc: "Classe et répond aux emails entrants" },
-    meeting_summary:    { label: "Compte-rendu réunion",  icon: "🎙", desc: "Génère CR et tâches depuis un audio" },
-    weekly_report:      { label: "Rapport hebdo",         icon: "📊", desc: "Synthèse auto chaque lundi" },
-    proposal_generator: { label: "Générateur de propale", icon: "📄", desc: "Propale pro en 5 min" },
-    qa_bot:             { label: "Base de connaissance",  icon: "💬", desc: "Q&A sur vos documents" },
-    lead_qualifier:     { label: "Qualification leads",   icon: "🎯", desc: "Qualifie et score vos prospects" },
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -49,24 +46,27 @@ export default async function WorkflowsPage() {
         </a>
       </div>
 
-      {/* Templates disponibles si aucun workflow */}
+      {/* Empty state — renvoie vers les templates */}
       {(!workflows || workflows.length === 0) && (
-        <div>
-          <p className="text-sm text-muted-foreground mb-4">
-            Commencez par choisir un template :
+        <div className="bg-card border border-border rounded-xl p-10 text-center">
+          <div className="text-5xl mb-4">⚡</div>
+          <h2 className="text-lg font-semibold mb-2">Aucun workflow pour l&apos;instant</h2>
+          <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
+            Explorez nos {WORKFLOW_TEMPLATES.length} templates prêts à l&apos;emploi pour automatiser votre business en quelques minutes.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(WORKFLOW_LABELS).map(([type, info]) => (
-              <a
-                key={type}
-                href={`/workflows/new?type=${type}`}
-                className="bg-card border border-border rounded-xl p-5 hover:border-primary/50 hover:shadow-sm transition-all group"
-              >
-                <div className="text-3xl mb-3">{info.icon}</div>
-                <div className="font-medium text-sm">{info.label}</div>
-                <div className="text-xs text-muted-foreground mt-1">{info.desc}</div>
-              </a>
-            ))}
+          <div className="flex gap-3 justify-center">
+            <a
+              href="/templates"
+              className="bg-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors"
+            >
+              Explorer les templates →
+            </a>
+            <a
+              href="/workflows/new"
+              className="bg-muted text-foreground px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-muted/80 transition-colors"
+            >
+              Créer manuellement
+            </a>
           </div>
         </div>
       )}
@@ -75,7 +75,7 @@ export default async function WorkflowsPage() {
       {workflows && workflows.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {workflows.map((wf) => {
-            const info = WORKFLOW_LABELS[wf.type];
+            const info = TEMPLATE_MAP[wf.type];
             return (
               <div
                 key={wf.id}

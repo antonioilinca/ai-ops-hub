@@ -122,6 +122,18 @@ export async function POST(req: NextRequest) {
     }
   } catch (err) {
     console.error(`[stripe-webhook] Erreur traitement event ${event.type}:`, err);
+
+    // Log l'erreur dans audit_logs pour visibilité (silencieux sinon)
+    try {
+      await admin.from("audit_logs").insert({
+        org_id: "00000000-0000-0000-0000-000000000000",
+        action: "billing.webhook_error",
+        resource_type: "stripe_event",
+        resource_id: event.id,
+        metadata: { event_type: event.type, error: err instanceof Error ? err.message : String(err) },
+      });
+    } catch { /* best-effort */ }
+
     // On renvoie 200 quand même pour éviter les retries Stripe sur nos bugs
     return NextResponse.json({ received: true, error: "Erreur interne" });
   }

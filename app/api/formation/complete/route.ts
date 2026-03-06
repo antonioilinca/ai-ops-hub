@@ -41,12 +41,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Aucune organisation" }, { status: 403 });
   }
 
+  // Use a sentinel value instead of NULL to avoid Postgres NULL-uniqueness issue
+  // (NULL != NULL in unique constraints, which would create duplicate rows)
+  const safeLessonId = lessonId ?? "__course__";
+
   const { error } = await supabase.from("course_completions").upsert(
     {
       user_id: user.id,
       org_id: member.org_id,
       course_slug: courseSlug,
-      lesson_id: lessonId ?? null,
+      lesson_id: safeLessonId,
     },
     { onConflict: "user_id,course_slug,lesson_id" }
   );

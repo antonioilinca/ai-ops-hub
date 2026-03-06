@@ -18,9 +18,8 @@ export type AuditAction =
   | "member.role_changed"
   | "member.removed"
   | "member.joined"
-  // Integrations
-  | "integration.connected"
-  | "integration.disconnected"
+  // Billing webhook errors
+  | "billing.webhook_error"
   // Auth
   | "auth.login"
   | "auth.logout"

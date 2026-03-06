@@ -2,57 +2,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-
-const TEMPLATES = [
-  {
-    type: "email_triage",
-    name: "Triage d'emails",
-    icon: "📧",
-    desc: "Classe automatiquement vos emails entrants par priorité et génère des réponses types.",
-    tags: ["Gmail", "Outlook", "IA"],
-    time: "~5 min de config",
-  },
-  {
-    type: "meeting_summary",
-    name: "Compte-rendu réunion",
-    icon: "🎙",
-    desc: "Transcrit vos réunions, identifie les décisions et génère les tâches à faire.",
-    tags: ["Audio", "Notion", "Slack"],
-    time: "~3 min de config",
-  },
-  {
-    type: "weekly_report",
-    name: "Rapport hebdomadaire",
-    icon: "📊",
-    desc: "Compile automatiquement vos métriques et envoie un résumé chaque lundi matin.",
-    tags: ["Analytics", "Email", "Slack"],
-    time: "~8 min de config",
-  },
-  {
-    type: "proposal_generator",
-    name: "Générateur de propale",
-    icon: "📄",
-    desc: "Génère des propositions commerciales personnalisées depuis un brief client.",
-    tags: ["HubSpot", "Drive", "IA"],
-    time: "~10 min de config",
-  },
-  {
-    type: "qa_bot",
-    name: "Base de connaissance IA",
-    icon: "💬",
-    desc: "Répondez aux questions de vos équipes ou clients depuis vos documents internes.",
-    tags: ["Documents", "Slack", "IA"],
-    time: "~15 min de config",
-  },
-  {
-    type: "lead_qualifier",
-    name: "Qualification de leads",
-    icon: "🎯",
-    desc: "Analyse et score automatiquement vos nouveaux leads entrants.",
-    tags: ["HubSpot", "Gmail", "IA"],
-    time: "~12 min de config",
-  },
-];
+import { WORKFLOW_TEMPLATES, TEMPLATE_CATEGORIES } from "@/data/templates";
 
 function NewWorkflowForm() {
   const router = useRouter();
@@ -60,9 +10,14 @@ function NewWorkflowForm() {
   const preselected = searchParams.get("type");
 
   const [selected, setSelected] = useState<string | null>(preselected);
-  const [name, setName]         = useState("");
-  const [saving, setSaving]     = useState(false);
-  const [error, setError]       = useState("");
+  const [name, setName] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+
+  const filtered = categoryFilter
+    ? WORKFLOW_TEMPLATES.filter((t) => t.category === categoryFilter)
+    : WORKFLOW_TEMPLATES;
 
   const handleCreate = async () => {
     if (!selected) { setError("Choisissez un template"); return; }
@@ -86,21 +41,48 @@ function NewWorkflowForm() {
   };
 
   return (
-    <div className="max-w-3xl space-y-8">
+    <div className="max-w-4xl space-y-8">
       <div>
         <a href="/workflows" className="text-sm text-muted-foreground hover:text-foreground">← Retour</a>
         <h1 className="text-2xl font-semibold mt-2">Nouveau workflow</h1>
-        <p className="text-sm text-muted-foreground mt-1">Choisissez un template pour démarrer rapidement</p>
+        <p className="text-sm text-muted-foreground mt-1">
+          Choisissez un template pour démarrer rapidement — {WORKFLOW_TEMPLATES.length} templates disponibles
+        </p>
+      </div>
+
+      {/* Category filters */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setCategoryFilter(null)}
+          className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+            !categoryFilter ? "bg-indigo-600 text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"
+          }`}
+        >
+          Tous
+        </button>
+        {TEMPLATE_CATEGORIES.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setCategoryFilter(cat.id)}
+            className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+              categoryFilter === cat.id
+                ? "bg-indigo-600 text-white"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
+          >
+            {cat.icon} {cat.label}
+          </button>
+        ))}
       </div>
 
       {/* Templates */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {TEMPLATES.map((t) => (
+        {filtered.map((t) => (
           <button
-            key={t.type}
-            onClick={() => { setSelected(t.type); setName(t.name); }}
+            key={t.id}
+            onClick={() => { setSelected(t.id); setName(t.name); }}
             className={`text-left border rounded-xl p-5 transition-all ${
-              selected === t.type
+              selected === t.id
                 ? "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-200"
                 : "border-border bg-card hover:border-indigo-300 hover:shadow-sm"
             }`}
@@ -108,7 +90,14 @@ function NewWorkflowForm() {
             <div className="flex items-start gap-3">
               <span className="text-3xl">{t.icon}</span>
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-sm">{t.name}</div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-sm">{t.name}</span>
+                  {t.popular && (
+                    <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-bold">
+                      Populaire
+                    </span>
+                  )}
+                </div>
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{t.desc}</p>
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {t.tags.map((tag) => (

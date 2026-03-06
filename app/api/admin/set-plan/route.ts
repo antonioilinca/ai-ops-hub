@@ -37,6 +37,19 @@ export async function POST(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  // Audit log
+  const { logAudit, getRequestMeta } = await import("@/lib/audit");
+  const meta = getRequestMeta(req);
+  await logAudit({
+    orgId: parsed.data.orgId,
+    userId: user.id,
+    action: "billing.plan_upgraded",
+    resourceType: "organization",
+    resourceId: parsed.data.orgId,
+    metadata: { plan: parsed.data.plan, status: parsed.data.status, via: "admin_panel" },
+    ...meta,
+  });
+
   const url = new URL("/admin", req.url);
   url.searchParams.set("success", `Plan mis à jour → ${parsed.data.plan} (${parsed.data.status})`);
   return NextResponse.redirect(url, { status: 303 });

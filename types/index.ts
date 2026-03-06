@@ -52,7 +52,18 @@ export type WorkflowType =
   | "weekly_report"
   | "proposal_generator"
   | "qa_bot"
-  | "lead_qualifier";
+  | "lead_qualifier"
+  | "follow_up_sequence"
+  | "process_checklist"
+  | "employee_onboarding"
+  | "leave_request"
+  | "candidate_screening"
+  | "content_brief"
+  | "event_registration"
+  | "expense_report"
+  | "invoice_request"
+  | "ticket_support"
+  | "feedback_collector";
 
 export type WorkflowRunStatus =
   | "pending"
@@ -87,27 +98,6 @@ export interface WorkflowRun {
   started_at: string | null;
   completed_at: string | null;
   created_at: string;
-}
-
-// ─── Integrations ───────────────────────────────────────────────────────────
-
-export type IntegrationProvider =
-  | "gmail"
-  | "google_drive"
-  | "notion"
-  | "hubspot"
-  | "slack"
-  | "outlook";
-
-export interface Integration {
-  id: string;
-  org_id: string;
-  provider: IntegrationProvider;
-  token_expires_at: string | null;
-  config: Record<string, unknown>;
-  connected_by: string | null;
-  created_at: string;
-  updated_at: string;
 }
 
 // ─── Audit Logs ─────────────────────────────────────────────────────────────

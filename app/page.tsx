@@ -127,7 +127,7 @@ function Hero() {
         </h1>
 
         <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-          OpsAI connecte vos outils métiers et exécute vos workflows automatiquement.
+          OpsAI vous donne des templates prêts à l&apos;emploi et des formulaires intelligents pour automatiser vos process.
           Gagnez des heures chaque semaine sans écrire une seule ligne de code.
         </p>
 
@@ -174,7 +174,7 @@ function Hero() {
                     <div className="h-2 bg-gray-100 rounded w-10" />
                   </div>
                 </div>
-                {["Dashboard","Workflows","Intégrations","Logs","Facturation"].map((item,i) => (
+                {["Dashboard","Workflows","Templates","Formulaires","Facturation"].map((item,i) => (
                   <div key={item} className={`flex items-center gap-2 px-2 py-2 rounded-lg mb-0.5 ${i===0?"bg-indigo-50":""}`}>
                     <div className={`w-4 h-4 rounded ${i===0?"bg-indigo-300":"bg-gray-200"}`} />
                     <div className={`h-2 rounded ${i===0?"bg-indigo-400 w-14":"bg-gray-200 w-16"}`} />
@@ -224,13 +224,13 @@ function Hero() {
 
 /* ─── LOGO BAR ───────────────────────────────────────────────── */
 function LogoBar() {
-  const tools = ["Gmail","Slack","Notion","Google Drive","HubSpot","Outlook","Webhooks"];
+  const useCases = ["Ventes","Ops","RH","Marketing","Finance","Support"];
   return (
     <section className="py-10 px-5 border-y border-gray-100 bg-gray-50/60">
       <div className="max-w-5xl mx-auto">
-        <p className="text-center text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Compatible avec vos outils préférés</p>
+        <p className="text-center text-xs text-gray-400 font-semibold uppercase tracking-widest mb-6">Templates prêts à l&apos;emploi pour chaque métier</p>
         <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3">
-          {tools.map((name) => (
+          {useCases.map((name) => (
             <span key={name} className="text-gray-400 font-bold text-sm md:text-base hover:text-indigo-500 transition-colors cursor-default select-none">
               {name}
             </span>
@@ -246,7 +246,7 @@ function Features() {
   const features = [
     { icon: "⚡", title: "Workflows sans code",    desc: "Créez des automatisations complexes en quelques clics. Configurez le déclencheur, les étapes et les actions, sans une ligne de code." },
     { icon: "🤖", title: "IA intégrée",            desc: "Analyse de texte, classification, résumé automatique, réponses générées par Claude AI directement dans vos workflows." },
-    { icon: "🔗", title: "7 intégrations natives",  desc: "Gmail, Slack, Notion, HubSpot, Google Drive, Outlook et Webhooks. Nouvelles intégrations chaque mois." },
+    { icon: "📦", title: "17 templates métier",      desc: "Ventes, Ops, RH, Marketing, Finance, Support : choisissez un template prêt à l'emploi et lancez votre workflow en 2 minutes." },
     { icon: "📋", title: "Logs et monitoring",     desc: "Chaque exécution est tracée en temps réel. Déboguer un workflow n'a jamais été aussi simple." },
     { icon: "👥", title: "Multi-équipes",           desc: "Gérez les accès par rôle (owner, admin, member). Chaque équipe a son espace isolé et sécurisé." },
     { icon: "🛡️", title: "Sécurité enterprise",    desc: "Données chiffrées, authentification sécurisée, conformité RGPD. Votre ops en toute sérénité." },
@@ -287,7 +287,7 @@ function Features() {
 /* ─── HOW IT WORKS ───────────────────────────────────────────── */
 function HowItWorks() {
   const steps = [
-    { num:"01", title:"Connectez vos outils",    desc:"Ajoutez vos intégrations en 2 clics : Slack, Gmail, Notion, HubSpot... Pas besoin de clé API compliquée.", icon:"🔌" },
+    { num:"01", title:"Choisissez un template",   desc:"Parcourez nos 17 templates par métier : ventes, ops, RH, finance... Sélectionnez celui qui correspond à votre besoin.", icon:"📦" },
     { num:"02", title:"Créez votre workflow",     desc:"Choisissez un type de workflow, configurez les paramètres et activez. Tout est guidé, étape par étape.", icon:"🗺️" },
     { num:"03", title:"Activez et oubliez",       desc:"OpsAI s'occupe du reste. Vos workflows tournent 24h/24, vous recevez des alertes si quelque chose cloche.", icon:"🚀" },
   ];
@@ -332,7 +332,7 @@ function HowItWorks() {
 function Stats() {
   const stats = [
     { value: "6", label: "Types de workflows prêts à l'emploi" },
-    { value: "7",    label: "Intégrations natives" },
+    { value: "17",   label: "Templates prêts à l'emploi" },
     { value: "44",   label: "Formations dans l'Academy" },
     { value: "~14h", label: "Économisées / semaine en moyenne" },
   ];
@@ -360,14 +360,14 @@ function Pricing() {
     {
       name: "Starter", price: "29€", period: "/mois",
       desc: "Idéal pour les petites équipes qui veulent automatiser sans complexité.",
-      features: ["Jusqu'à 5 workflows actifs","3 membres max","Toutes les intégrations","Logs d'audit","Support par email"],
+      features: ["Jusqu'à 5 workflows actifs","3 membres max","Tous les templates","Formulaires illimités","Support par email"],
       cta: "Commencer", highlight: false,
     },
     {
       name: "Team", price: "79€", period: "/mois",
       badge: "✨ Populaire",
       desc: "Pour les équipes en croissance qui ont besoin de puissance et de collaboration.",
-      features: ["Jusqu'à 20 workflows actifs","15 membres max","Toutes les intégrations","IA Claude intégrée","Multi-utilisateurs & rôles","Academy complète","Support prioritaire"],
+      features: ["Jusqu'à 20 workflows actifs","15 membres max","Tous les templates","Formulaires illimités","IA Claude intégrée","Multi-utilisateurs & rôles","Academy complète","Support prioritaire"],
       cta: "Commencer", highlight: true,
     },
   ];

@@ -111,6 +111,8 @@ function PlanCard({
       <ul className="text-sm text-muted-foreground space-y-1 mb-4">
         <li>✓ {p.maxWorkflows} workflows</li>
         <li>✓ {p.maxMembers} membres</li>
+        <li>✓ Templates & Formulaires illimités</li>
+        <li>✓ Academy IA incluse</li>
         <li>✓ Support prioritaire</li>
       </ul>
       {isOwner && (
